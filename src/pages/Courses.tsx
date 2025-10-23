@@ -103,12 +103,12 @@ const Courses = () => {
     }
   };
 
-  const handleSaveCourse = async (course: Course) => {
+  const handleSaveCourse = async (courseId: string, courseName: string) => {
     if (!session?.user.id) return;
 
     try {
       // Check if already saved
-      const existing = studentCourses.find(sc => sc.curso_id === course.id);
+      const existing = studentCourses.find(sc => sc.curso_id === courseId);
       
       if (existing) {
         toast.info("Você já salvou este curso!");
@@ -119,8 +119,8 @@ const Courses = () => {
         .from("student_courses")
         .insert({
           aluno_id: session.user.id,
-          curso_id: course.id,
-          title: course.nome,
+          curso_id: courseId,
+          title: courseName,
           progresso_aluno: 0,
           tempo_estudo: 0,
           salvar_favorito: true,
@@ -159,6 +159,8 @@ const Courses = () => {
   };
 
   const savedCourses = studentCourses.filter(sc => sc.salvar_favorito);
+  const inProgressCourses = studentCourses.filter(sc => sc.tempo_estudo > 0 && sc.progresso_aluno < 100);
+  const completedCourses = studentCourses.filter(sc => sc.progresso_aluno === 100);
 
   if (loading) {
     return (
@@ -208,17 +210,24 @@ const Courses = () => {
               </p>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {allCourses.map((course) => (
-                  <CourseCard
-                    key={course.id}
-                    id={course.id}
-                    nome={course.nome}
-                    primeiraAula={course.primeira_aula || undefined}
-                    cover={course.cover || undefined}
-                    onAccessCourse={() => handleSaveCourse(course)}
-                    isBookmarked={studentCourses.some(sc => sc.curso_id === course.id)}
-                  />
-                ))}
+                {allCourses.map((course) => {
+                  const savedCourse = studentCourses.find(sc => sc.curso_id === course.id);
+                  return (
+                    <CourseCard
+                      key={course.id}
+                      id={course.id}
+                      nome={course.nome}
+                      primeiraAula={course.primeira_aula || undefined}
+                      cover={course.cover || undefined}
+                      onAccessCourse={() => toast.info("Abrindo curso...")}
+                      onToggleBookmark={savedCourse 
+                        ? () => handleToggleBookmark(savedCourse.id, savedCourse.salvar_favorito)
+                        : () => handleSaveCourse(course.id, course.nome)
+                      }
+                      isBookmarked={!!savedCourse}
+                    />
+                  );
+                })}
               </div>
             )}
           </TabsContent>
@@ -250,15 +259,53 @@ const Courses = () => {
           </TabsContent>
 
           <TabsContent value="andamento" className="space-y-6">
-            <p className="text-center text-muted-foreground py-12">
-              Nenhum curso em andamento
-            </p>
+            {inProgressCourses.length === 0 ? (
+              <p className="text-center text-muted-foreground py-12">
+                Nenhum curso em andamento
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {inProgressCourses.map((sc) => (
+                  <CourseCard
+                    key={sc.id}
+                    id={sc.id}
+                    nome={sc.courses.nome}
+                    primeiraAula={sc.courses.primeira_aula || undefined}
+                    progresso={sc.progresso_aluno}
+                    cover={sc.courses.cover || undefined}
+                    showProgress
+                    onAccessCourse={() => toast.info("Abrindo curso...")}
+                    onToggleBookmark={() => handleToggleBookmark(sc.id, sc.salvar_favorito)}
+                    isBookmarked={sc.salvar_favorito}
+                  />
+                ))}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="concluidos" className="space-y-6">
-            <p className="text-center text-muted-foreground py-12">
-              Nenhum curso concluído
-            </p>
+            {completedCourses.length === 0 ? (
+              <p className="text-center text-muted-foreground py-12">
+                Nenhum curso concluído
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {completedCourses.map((sc) => (
+                  <CourseCard
+                    key={sc.id}
+                    id={sc.id}
+                    nome={sc.courses.nome}
+                    primeiraAula={sc.courses.primeira_aula || undefined}
+                    progresso={sc.progresso_aluno}
+                    cover={sc.courses.cover || undefined}
+                    showProgress
+                    onAccessCourse={() => toast.info("Abrindo curso...")}
+                    onToggleBookmark={() => handleToggleBookmark(sc.id, sc.salvar_favorito)}
+                    isBookmarked={sc.salvar_favorito}
+                  />
+                ))}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </main>
