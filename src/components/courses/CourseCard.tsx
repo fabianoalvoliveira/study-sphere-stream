@@ -32,7 +32,17 @@ export const CourseCard = ({
   const [imageError, setImageError] = useState(false);
 
   return (
-    <Card className="group hover:shadow-lg transition-shadow duration-300">
+    <Card className="group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+      {cover && !imageError && (
+        <div className="relative w-full h-48 overflow-hidden bg-muted">
+          <img
+            src={cover}
+            alt={nome}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={() => setImageError(true)}
+          />
+        </div>
+      )}
       <CardContent className="p-6 space-y-4">
         <div className="flex justify-between items-start">
           <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
