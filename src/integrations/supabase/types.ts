@@ -56,6 +56,54 @@ export type Database = {
         }
         Relationships: []
       }
+      journeys: {
+        Row: {
+          active: boolean | null
+          courses: Json | null
+          cover: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string
+          journeys: Json | null
+          number_steps: number | null
+          sub_journeys_courses: Json | null
+          sub_journeys_journeys: Json | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          courses?: Json | null
+          cover?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string
+          journeys?: Json | null
+          number_steps?: number | null
+          sub_journeys_courses?: Json | null
+          sub_journeys_journeys?: Json | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          courses?: Json | null
+          cover?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string
+          journeys?: Json | null
+          number_steps?: number | null
+          sub_journeys_courses?: Json | null
+          sub_journeys_journeys?: Json | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       student_courses: {
         Row: {
           alunas_aulas: Json | null
@@ -106,6 +154,71 @@ export type Database = {
             columns: ["curso_id"]
             isOneToOne: false
             referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_journeys: {
+        Row: {
+          courses: Json | null
+          cover: string | null
+          created_at: string | null
+          current_step: number | null
+          description: string | null
+          duration: number | null
+          id: string
+          journey_id: string
+          journeys: Json | null
+          number_steps: number | null
+          saved_created: boolean | null
+          student_id: string
+          sub_journeys_courses: Json | null
+          sub_journeys_journeys: Json | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          courses?: Json | null
+          cover?: string | null
+          created_at?: string | null
+          current_step?: number | null
+          description?: string | null
+          duration?: number | null
+          id?: string
+          journey_id: string
+          journeys?: Json | null
+          number_steps?: number | null
+          saved_created?: boolean | null
+          student_id: string
+          sub_journeys_courses?: Json | null
+          sub_journeys_journeys?: Json | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          courses?: Json | null
+          cover?: string | null
+          created_at?: string | null
+          current_step?: number | null
+          description?: string | null
+          duration?: number | null
+          id?: string
+          journey_id?: string
+          journeys?: Json | null
+          number_steps?: number | null
+          saved_created?: boolean | null
+          student_id?: string
+          sub_journeys_courses?: Json | null
+          sub_journeys_journeys?: Json | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_journeys_journey_id_fkey"
+            columns: ["journey_id"]
+            isOneToOne: false
+            referencedRelation: "journeys"
             referencedColumns: ["id"]
           },
         ]
