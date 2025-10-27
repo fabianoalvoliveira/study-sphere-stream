@@ -4,8 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CourseCard } from "@/components/courses/CourseCard";
-import { Button } from "@/components/ui/button";
-import { LogOut, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 
 interface Course {
@@ -153,11 +151,6 @@ const Courses = () => {
     }
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/auth");
-  };
-
   const savedCourses = studentCourses.filter(sc => sc.salvar_favorito);
   const inProgressCourses = studentCourses.filter(sc => sc.tempo_estudo > 0 && sc.progresso_aluno < 100);
   const completedCourses = studentCourses.filter(sc => sc.progresso_aluno === 100);
@@ -172,21 +165,6 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary rounded-lg p-2">
-              <BookOpen className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <h1 className="text-2xl font-bold">Cursos</h1>
-          </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Sair
-          </Button>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-8">
         <div className="mb-6">
           <h2 className="text-3xl font-bold mb-2">Cursos</h2>
