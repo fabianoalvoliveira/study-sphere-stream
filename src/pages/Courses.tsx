@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
@@ -34,7 +34,9 @@ const Courses = () => {
   const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [studentCourses, setStudentCourses] = useState<StudentCourse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("descobrir");
   const navigate = useNavigate();
+  const tabsListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Set up auth state listener
@@ -165,29 +167,41 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold mb-2">Cursos</h2>
-          <p className="text-muted-foreground">
+      <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2">Cursos</h2>
+          <p className="text-sm sm:text-base text-muted-foreground">
             Explore cursos para desenvolver competências específicas
           </p>
         </div>
 
-        <Tabs defaultValue="descobrir" className="w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-4 mb-8">
-            <TabsTrigger value="descobrir">Descobrir</TabsTrigger>
-            <TabsTrigger value="salvos">Salvos</TabsTrigger>
-            <TabsTrigger value="andamento">Em andamento</TabsTrigger>
-            <TabsTrigger value="concluidos">Concluídos</TabsTrigger>
-          </TabsList>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <div className="relative mb-6 sm:mb-8">
+            <div className="overflow-x-auto scrollbar-hide" ref={tabsListRef}>
+              <TabsList className="inline-flex w-auto min-w-full sm:w-full sm:grid sm:grid-cols-4 h-auto">
+                <TabsTrigger value="descobrir" className="whitespace-nowrap px-6 py-2.5">
+                  Descobrir
+                </TabsTrigger>
+                <TabsTrigger value="salvos" className="whitespace-nowrap px-6 py-2.5">
+                  Salvos
+                </TabsTrigger>
+                <TabsTrigger value="andamento" className="whitespace-nowrap px-6 py-2.5">
+                  Em andamento
+                </TabsTrigger>
+                <TabsTrigger value="concluidos" className="whitespace-nowrap px-6 py-2.5">
+                  Concluídos
+                </TabsTrigger>
+              </TabsList>
+            </div>
+          </div>
 
-          <TabsContent value="descobrir" className="space-y-6">
+          <TabsContent value="descobrir" className="space-y-6 mt-0">
             {allCourses.length === 0 ? (
               <p className="text-center text-muted-foreground py-12">
                 Nenhum curso disponível no momento
               </p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {allCourses.map((course) => {
                   const savedCourse = studentCourses.find(sc => sc.curso_id === course.id);
                   return (
@@ -210,13 +224,13 @@ const Courses = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="salvos" className="space-y-6">
+          <TabsContent value="salvos" className="space-y-6 mt-0">
             {savedCourses.length === 0 ? (
               <p className="text-center text-muted-foreground py-12">
                 Você ainda não salvou nenhum curso
               </p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {savedCourses.map((sc) => (
                   <CourseCard
                     key={sc.id}
@@ -236,13 +250,13 @@ const Courses = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="andamento" className="space-y-6">
+          <TabsContent value="andamento" className="space-y-6 mt-0">
             {inProgressCourses.length === 0 ? (
               <p className="text-center text-muted-foreground py-12">
                 Nenhum curso em andamento
               </p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {inProgressCourses.map((sc) => (
                   <CourseCard
                     key={sc.id}
@@ -261,13 +275,13 @@ const Courses = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="concluidos" className="space-y-6">
+          <TabsContent value="concluidos" className="space-y-6 mt-0">
             {completedCourses.length === 0 ? (
               <p className="text-center text-muted-foreground py-12">
                 Nenhum curso concluído
               </p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {completedCourses.map((sc) => (
                   <CourseCard
                     key={sc.id}

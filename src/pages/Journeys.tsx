@@ -30,12 +30,12 @@ export default function Journeys() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold mb-2">Jornadas</h2>
-        <p className="text-muted-foreground">Explore suas jornadas de aprendizado</p>
+    <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Jornadas</h2>
+        <p className="text-sm sm:text-base text-muted-foreground">Explore suas jornadas de aprendizado</p>
       </div>
-      <p className="text-muted-foreground">Suas jornadas aparecerão aqui em breve.</p>
+      <p className="text-sm sm:text-base text-muted-foreground">Suas jornadas aparecerão aqui em breve.</p>
     </div>
   );
 }

@@ -158,18 +158,18 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Header with Search and Notification */}
       <div className="border-b bg-card">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between gap-4">
+        <div className="container mx-auto px-4 sm:px-6 py-4">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             <div className="flex-1 max-w-2xl">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Pesquisar cursos, jornadas ou competências..."
-                  className="pl-10 bg-background"
+                  placeholder="Pesquisar..."
+                  className="pl-10 bg-background text-sm sm:text-base"
                 />
               </div>
             </div>
-            <Button variant="ghost" size="icon" className="relative">
+            <Button variant="ghost" size="icon" className="relative shrink-0">
               <Bell className="h-5 w-5" />
               <span className="absolute top-1 right-1 h-2 w-2 bg-primary rounded-full"></span>
             </Button>
@@ -177,10 +177,10 @@ export default function Home() {
         </div>
       </div>
 
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Bem-vindo de volta, {userName}!</h1>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Bem-vindo de volta, {userName}!</h1>
         </div>
 
         {/* Statistics Cards */}
@@ -252,7 +252,7 @@ export default function Home() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {displayedJourneys.map((journey) => {
                 const isStudentJourney = 'current_step' in journey;
                 const journeyData = isStudentJourney ? journey as StudentJourney : journey as Journey;
@@ -337,7 +337,7 @@ export default function Home() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {displayedCourses.map((course) => {
                 const isStudentCourse = 'progresso_aluno' in course;
                 const courseData = isStudentCourse ? (course as StudentCourse).courses : course as Course;
