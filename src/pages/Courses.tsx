@@ -176,19 +176,19 @@ const Courses = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="relative mb-6 sm:mb-8">
-            <div className="overflow-x-auto scrollbar-hide" ref={tabsListRef}>
-              <TabsList className="inline-flex w-auto min-w-full sm:w-full sm:grid sm:grid-cols-4 h-auto">
-                <TabsTrigger value="descobrir" className="whitespace-nowrap px-6 py-2.5">
+          <div className="relative mb-6 sm:mb-8 -mx-4 sm:mx-0">
+            <div className="overflow-x-auto overflow-y-hidden scrollbar-hide px-4 sm:px-0" ref={tabsListRef}>
+              <TabsList className="inline-flex w-max sm:w-full sm:grid sm:grid-cols-4 gap-1">
+                <TabsTrigger value="descobrir" className="whitespace-nowrap">
                   Descobrir
                 </TabsTrigger>
-                <TabsTrigger value="salvos" className="whitespace-nowrap px-6 py-2.5">
+                <TabsTrigger value="salvos" className="whitespace-nowrap">
                   Salvos
                 </TabsTrigger>
-                <TabsTrigger value="andamento" className="whitespace-nowrap px-6 py-2.5">
+                <TabsTrigger value="andamento" className="whitespace-nowrap">
                   Em andamento
                 </TabsTrigger>
-                <TabsTrigger value="concluidos" className="whitespace-nowrap px-6 py-2.5">
+                <TabsTrigger value="concluidos" className="whitespace-nowrap">
                   Concluídos
                 </TabsTrigger>
               </TabsList>
