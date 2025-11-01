@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -30,13 +30,28 @@ export const CourseCard = ({
   showProgress = false,
 }: CourseCardProps) => {
   const [imageError, setImageError] = useState(false);
+  const [coverImage, setCoverImage] = useState<string | null>('https://www.shutterstock.com/shutterstock/photos/2629945729/display_1500/stock-photo-uk-flag-with-pen-on-english-language-book-2629945729.jpg');
+  
+  useEffect(() => {
+    if (cover) {
+      setCoverImage(cover);
+    }
+  }, [cover])
+
+  useEffect(() => {
+    if(imageError){
+      console.log('usou a standart')
+      setCoverImage('https://www.shutterstock.com/shutterstock/photos/2629945729/display_1500/stock-photo-uk-flag-with-pen-on-english-language-book-2629945729.jpg')
+      setImageError(false)
+    }
+  }, [imageError])
 
   return (
     <Card className="group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
-      {cover && !imageError && (
+      {coverImage && !imageError && (
         <div className="relative w-full h-48 overflow-hidden bg-muted">
           <img
-            src={cover}
+            src={coverImage}
             alt={nome}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             onError={() => setImageError(true)}
