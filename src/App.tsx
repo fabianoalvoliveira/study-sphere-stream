@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Courses from "./pages/Courses";
 import Journeys from "./pages/Journeys";
+import JourneyDetail from "./pages/JourneyDetail";
 import Exams from "./pages/Exams";
 import Competencies from "./pages/Competencies";
 import NotFound from "./pages/NotFound";
@@ -42,6 +43,7 @@ const MainLayout = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/jornadas" element={<Journeys />} />
+              <Route path="/jornadas/:id" element={<JourneyDetail />} />
               <Route path="/cursos" element={<Courses />} />
               <Route path="/provas" element={<Exams />} />
               <Route path="/competencias" element={<Competencies />} />

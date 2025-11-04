@@ -227,7 +227,7 @@ export default function Journeys() {
                       coursesCount={getCoursesCount(journey.courses)}
                       journeysCount={getJourneysCount(journey.journeys)}
                       totalSteps={journey.number_steps}
-                      onAccessJourney={() => toast.info("Abrindo jornada...")}
+                      onAccessJourney={() => navigate(`/jornadas/${journey.id}`)}
                       onToggleBookmark={savedJourney 
                         ? () => handleToggleBookmark(savedJourney.id, savedJourney.saved_created)
                         : () => handleSaveJourney(journey.id, journey.title, journey)
@@ -259,7 +259,7 @@ export default function Journeys() {
                     currentStep={sj.current_step}
                     totalSteps={sj.number_steps}
                     showProgress
-                    onAccessJourney={() => toast.info("Abrindo jornada...")}
+                    onAccessJourney={() => navigate(`/jornadas/${sj.id}`)}
                     onToggleBookmark={() => handleToggleBookmark(sj.id, sj.saved_created)}
                     isBookmarked={sj.saved_created}
                   />
@@ -287,7 +287,7 @@ export default function Journeys() {
                     currentStep={sj.current_step}
                     totalSteps={sj.number_steps}
                     showProgress
-                    onAccessJourney={() => toast.info("Abrindo jornada...")}
+                    onAccessJourney={() => navigate(`/jornadas/${sj.id}`)}
                     onToggleBookmark={() => handleToggleBookmark(sj.id, sj.saved_created)}
                     isBookmarked={sj.saved_created}
                   />
@@ -315,7 +315,7 @@ export default function Journeys() {
                     currentStep={sj.current_step}
                     totalSteps={sj.number_steps}
                     showProgress
-                    onAccessJourney={() => toast.info("Abrindo jornada...")}
+                    onAccessJourney={() => navigate(`/jornadas/${sj.id}`)}
                     onToggleBookmark={() => handleToggleBookmark(sj.id, sj.saved_created)}
                     isBookmarked={sj.saved_created}
                   />
